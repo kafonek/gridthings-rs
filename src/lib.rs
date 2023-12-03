@@ -1,7 +1,9 @@
-#[derive(Debug, Clone, PartialEq, Eq)]
+use std::hash::Hash;
+
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Cell<T>
 where
-    T: Clone + PartialEq,
+    T: Clone + PartialEq + Eq + Hash,
 {
     pub y: usize, // row number, 0 is top row
     pub x: usize, // column number, 0 is left-most entry
@@ -11,7 +13,7 @@ where
 #[derive(Debug)]
 pub struct Grid<T>
 where
-    T: Clone + PartialEq,
+    T: Clone + PartialEq + Eq + Hash,
 {
     data: Vec<Vec<Cell<T>>>,
 }
@@ -55,7 +57,7 @@ impl GridFromString<i32> for Grid<i32> {
 
 impl<T> Grid<T>
 where
-    T: Clone + PartialEq,
+    T: Clone + PartialEq + Eq + Hash,
 {
     pub fn rows(&self) -> impl Iterator<Item = &Vec<Cell<T>>> {
         self.data.iter()
